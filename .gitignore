@@ -128,4 +128,6 @@ dist
 
 # Config files with API keys
 config/*.json
-
+# Stored audio files (ogg & mp3)
+voices/*.mp3
+voices/*.ogg

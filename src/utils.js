@@ -21,10 +21,7 @@ export async function processTextToChat(ctx, content) {
         ctx.session.messages.push({ role: openai.roles.USER, content })
         // push bot messages into the session (context)
         const response = await openai.chat(ctx.session.messages)
-        ctx.session.messages.push({
-            role: openai.roles.ASSISTANT,
-            content: response.content,
-        });
+        ctx.session.messages.push({role: openai.roles.ASSISTANT, content: response.content});
         await ctx.reply(response.content);
     } catch (e) {
         console.log('Error while processing text to GPT', e.message);

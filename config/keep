@@ -1,0 +1,5 @@
+default.json, production.json example:
+{
+  "TELEGRAM_TOKEN": "Your token from https://t.me/BotFather",
+  "OPENAI_KEY": "Your API key from https://platform.openai.com/account/api-keys"
+}
