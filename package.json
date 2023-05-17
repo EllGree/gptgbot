@@ -1,12 +1,12 @@
 {
-  "type": "module",
   "name": "gpt_tgbot",
   "version": "1.0.0",
   "description": "NodeJS ChatGPT Telegram Bot",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./src/main.js",
     "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",
+    "start": "cross-env NODE_ENV=production node ./src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

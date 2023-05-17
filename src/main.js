@@ -5,10 +5,10 @@ import config from 'config';
 import { ogg } from './ogg.js'
 import { openai } from './openai.js';
 import { removeFile, initCommand, processTextToChat, INITIAL_SESSION } from './utils.js';
+import process from "nodemon";
 
-const bot = new Telegraf(config.get('TELEGRAM_TOKEN'))
-const sessionId = session();
-bot.use(sessionId); // tell bot to use the session
+const bot = new Telegraf(config.get('TELEGRAM_TOKEN'));
+bot.use(session()); // tell bot to use the session
 console.log('Started!');
 
 // the bot registers a new context when new and start commands are invoked:
@@ -43,3 +43,9 @@ bot.on(message('text'), async (ctx) => {
         console.error(`Error while processing text message`, e.message);
     }
 });
+
+bot.launch().then(r => {
+    console.log('Bot started', r);
+});
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
