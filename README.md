@@ -1,2 +1,3 @@
 # gpt_tgbot
- NodeJS ChatGPT Telegram Bot
+ 
+Node.js ChatGPT Telegram Bot
