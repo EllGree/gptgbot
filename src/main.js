@@ -6,16 +6,18 @@ import { ogg } from './ogg.js'
 import { openai } from './openai.js';
 import { removeFile, initCommand, processTextToChat, INITIAL_SESSION } from './utils.js';
 
-const bot = new Telegraf(config.get('TELEGRAM_BOT'))
-bot.use(session()); // tell bot to use the session
+const bot = new Telegraf(config.get('TELEGRAM_TOKEN'))
+const sessionId = session();
+bot.use(sessionId); // tell bot to use the session
+console.log('Started!');
 
 // the bot registers a new context when new and start commands are invoked:
 bot.command('new', initCommand);
 bot.command('start', initCommand);
 
 bot.on(message('voice'), async (ctx) => {
-    // if the session is undefined, create a new one
-    ctx.session ??= INITIAL_SESSION;
+    ctx.session ??= INITIAL_SESSION; // if the session is undefined, create a new one
+    console.log('Voice message received', ctx.message);
     try {
         await ctx.reply(code('Message received. Waiting for the service reply...'));
         const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id);
@@ -32,11 +34,12 @@ bot.on(message('voice'), async (ctx) => {
 });
 
 bot.on(message('text'), async (ctx) => {
-    ctx.session ??= INITIAL_SESSION
+    ctx.session ??= INITIAL_SESSION;
+    console.log('Text message received', ctx.message);
     try {
-        await ctx.reply(code('Сообщение принял. Жду ответ от сервера...'))
-        await processTextToChat(ctx, ctx.message.text)
+        await ctx.reply(code('Message received. Waiting for the service reply...'));
+        await processTextToChat(ctx, ctx.message.text);
     } catch (e) {
-        console.log(`Error while voice message`, e.message)
+        console.error(`Error while processing text message`, e.message);
     }
 });
